@@ -1,9 +1,18 @@
 package s198.project2.reuse;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+
+import java.io.File;
+import java.util.Date;
 
 
 public class PostActivity extends ActionBarActivity {
@@ -35,5 +44,27 @@ public class PostActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private static int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 1;
+
+    public void takePicture (View v) {
+        Intent camera_intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(camera_intent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+                imageView.setImageBitmap(thumbnail);
+            }
+        }
+    }
+
+    public void postItem (View v) {
+
     }
 }
