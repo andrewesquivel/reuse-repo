@@ -1,7 +1,8 @@
 package s198.project2.reuse;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -35,5 +36,10 @@ public class MapActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public FragmentManager getSupportFragmentManager() {
+        return null;
     }
 }

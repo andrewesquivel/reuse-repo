@@ -8,4 +8,5 @@
     <string name="title_activity_post">PostActivity</string>
     <string name="title_activity_claim">ClaimActivity</string>
     <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
