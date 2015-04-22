@@ -65,6 +65,7 @@ public class PostActivity extends ActionBarActivity {
     }
 
     public void postItem (View v) {
-
+        Intent intent = new Intent(this, PostSuccessActivity.class);
+        startActivity(intent);
     }
 }

@@ -8,10 +8,18 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="View Items"
+        android:id="@+id/button4"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="viewItems" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Post Item"
         android:id="@+id/button3"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/button4"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="75dp"
-        android:onClick="postScreen" />
+        android:onClick="postScreen"/>
 </RelativeLayout>

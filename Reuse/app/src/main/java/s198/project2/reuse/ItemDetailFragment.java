@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -47,6 +48,8 @@ public class ItemDetailFragment extends Fragment {
         }
     }
 
+    String[] items = new String[] {"Macbook Air", "Biology textbook", "Binders", "HP Printer"};
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,7 +57,9 @@ public class ItemDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.content);
+            int item = Integer.parseInt(mItem.content.substring(5));
+            //((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.content);
+            ((TextView) rootView.findViewById(R.id.item_detail)).setText(items[item-1]);
         }
 
         return rootView;

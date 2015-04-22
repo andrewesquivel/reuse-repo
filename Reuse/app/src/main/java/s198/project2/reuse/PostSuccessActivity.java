@@ -1,26 +1,34 @@
 package s198.project2.reuse;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.TextView;
 
 
-public class MainActivity extends ActionBarActivity {
+public class PostSuccessActivity extends ActionBarActivity {
+
+    private String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_post_success);
+        String code = "";
+        int rand;
+        for (int i = 0; i < 4; i++) {
+            rand = (int) Math.round(25*Math.random());
+            code += alphabet.substring(rand, rand+1);
+        }
+        ((TextView)findViewById(R.id.textView6)).setText(code);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_post_success, menu);
         return true;
     }
 
@@ -37,15 +45,5 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void postScreen(View v) {
-        Intent intent = new Intent(this, PostActivity.class);
-        startActivity(intent);
-    }
-
-    public void viewItems(View v) {
-        Intent intent = new Intent(this, ItemListActivity.class);
-        startActivity(intent);
     }
 }

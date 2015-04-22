@@ -21,6 +21,8 @@ import s198.project2.reuse.dummy.DummyContent;
  */
 public class ItemListFragment extends ListFragment {
 
+    public String[] items = new String[] {"Macbook Air", "Biology textbook", "Binders", "HP Printer"};
+
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -71,12 +73,10 @@ public class ItemListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                DummyContent.ITEMS));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getActivity(), android.R.layout.simple_list_item_activated_1,
+                items);
+        setListAdapter(adapter);
     }
 
     @Override
