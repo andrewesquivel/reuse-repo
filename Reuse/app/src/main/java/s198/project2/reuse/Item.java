@@ -1,11 +1,20 @@
 package s198.project2.reuse;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.firebase.client.Firebase;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by rachelwang1994 on 4/22/15.
  */
-public class Item {
+public class Item implements Parcelable {
 
     private String user;
     private String name;
@@ -14,9 +23,10 @@ public class Item {
     private String pictureUrl;
     private String code;
     private List<String> tags;
+    private boolean claimed;
 
     public Item(String user, String name, String description, List<Double> location,
-                String pictureUrl, String code, List<String> tags) {
+                String pictureUrl, String code, List<String> tags, boolean claimed) {
         this.user = user;
         this.name = name;
         this.description = description;
@@ -24,6 +34,29 @@ public class Item {
         this.pictureUrl = pictureUrl;
         this.code = code;
         this.tags = tags;
+        this.claimed = claimed;
+    }
+
+    public Item(Map<String, Object> itemMap) {
+        // this.user
+        this.name = (String) itemMap.get("name");
+        this.description = (String) itemMap.get("description");
+        this.location = (List<Double>) itemMap.get("location");
+        this.pictureUrl = (String) itemMap.get("pictureUrl");
+        this.code = (String) itemMap.get("code");
+        // this.tags
+//        this.claimed = (boolean) itemMap.get("claimed");
+    }
+
+    public Item(Parcel in) {
+        this.user = in.readString();
+        this.name = in.readString();
+        this.description = in.readString();
+        // this.location
+        this.pictureUrl = in.readString();
+        this.code = in.readString();
+        // this.tags
+        this.claimed = in.readByte() != 0;
     }
 
     public String getUser() {
@@ -53,4 +86,36 @@ public class Item {
     public List<String> getTags() {
         return tags;
     }
+
+    public boolean isClaimed() {
+        return claimed;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(user);
+        dest.writeString(name);
+        dest.writeString(description);
+        // location
+        dest.writeString(pictureUrl);
+        dest.writeString(code);
+        dest.writeByte((byte) (claimed ? 1 : 0));
+        // tags
+        // boolean
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Item createFromParcel(Parcel in) {
+            return new Item(in);
+        }
+
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
 }

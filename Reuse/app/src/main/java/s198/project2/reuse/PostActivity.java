@@ -1,5 +1,6 @@
 package s198.project2.reuse;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,18 +10,32 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.firebase.client.Firebase;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
-public class PostActivity extends ActionBarActivity {
+public class PostActivity extends Activity {
+
+    public static final String FIREBASE_URL = "https://rswang.firebaseio.com";
+    private Firebase firebase;
+
+    private String alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+    private final String FILEPICKER_API_KEY = "AKzhkK4dxSBSbK9eNfY3vz";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        firebase = new Firebase(FIREBASE_URL).child("items");
     }
 
 
@@ -65,7 +80,50 @@ public class PostActivity extends ActionBarActivity {
     }
 
     public void postItem (View v) {
+        // get username
+
+        // get name
+        EditText etName = (EditText) findViewById(R.id.nameInput);
+        String name = etName.getText().toString();
+
+        // get description
+        EditText etDescription = (EditText) findViewById(R.id.descriptionInput);
+        String description = etDescription.getText().toString();
+
+        // get location
+        List<Double> location = new ArrayList<>();
+        location.add(42.3598);
+        location.add(71.0921);
+
+        // get filepicker url
+        String pictureUrl = "http://zapp0.staticworld.net/reviews/graphics/products/uploaded/118242_g3.jpg";
+
+        // generate random code
+        String code = "";
+        int rand;
+        for (int i = 0; i < 4; i++) {
+            rand = (int) Math.round(25*Math.random());
+            code += alphabet.substring(rand, rand+1);
+        }
+
+        // get tags
+        List<String> tags = new ArrayList<String>();
+
+        Item item = new Item(
+                "myUsername",
+                name,
+                description,
+                location,
+                pictureUrl,
+                "A8dZ",
+                tags,
+                false // unclaimed
+        );
+
+        // push item to firebase
+        firebase.push().setValue(item);
         Intent intent = new Intent(this, PostSuccessActivity.class);
+        intent.putExtra("code", code);
         startActivity(intent);
     }
 }

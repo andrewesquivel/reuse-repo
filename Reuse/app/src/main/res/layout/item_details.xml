@@ -3,24 +3,27 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="s198.project2.reuse.ItemActivity">
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View Items"
-        android:id="@+id/button4"
-        android:layout_centerVertical="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/name"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:onClick="viewItems" />
+        android:layout_marginTop="50dp" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Post Item"
-        android:id="@+id/button3"
-        android:layout_above="@+id/button4"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/description"
+        android:layout_below="@+id/name"
         android:layout_centerHorizontal="true"
-        android:onClick="postScreen"/>
+        android:layout_marginTop="46dp" />
 
 </RelativeLayout>

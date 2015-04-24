@@ -9,4 +9,5 @@
     <string name="title_activity_claim">ClaimActivity</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_post_success">PostSuccess</string>
+    <string name="title_activity_item">ItemActivity</string>
 </resources>

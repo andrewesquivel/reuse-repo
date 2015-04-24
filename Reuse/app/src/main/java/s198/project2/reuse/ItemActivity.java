@@ -1,32 +1,32 @@
 package s198.project2.reuse;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 
-public class PostSuccessActivity extends Activity {
-
+public class ItemActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_success);
-
+        setContentView(R.layout.item_details);
         Bundle data = getIntent().getExtras();
-        String code = data.getString("code");
+        Item item = (Item) data.getParcelable("item");
+        TextView tvName = (TextView) findViewById(R.id.name);
+        tvName.setText(item.getName());
+        TextView tvDescription = (TextView) findViewById(R.id.description);
+        tvDescription.setText(item.getDescription());
 
-        ((TextView)findViewById(R.id.textView6)).setText(code);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_post_success, menu);
+        getMenuInflater().inflate(R.menu.menu_item, menu);
         return true;
     }
 
