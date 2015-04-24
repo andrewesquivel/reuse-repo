@@ -22,17 +22,12 @@ import java.util.Map;
  */
 public class ItemList extends ListActivity {
 
-    public static final String FIREBASE_URL = "https://rswang.firebaseio.com";
-    private Firebase firebase;
-    private List<Item> items;
-
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
         setContentView(R.layout.item_list_view);
-        firebase = new Firebase(FIREBASE_URL).child("items");
 
-        List<Item> items = getItems();
+        List<Item> items = new ArrayList<>();
         ArrayAdapter<Item> adapter = new ItemArrayAdapter(this,
                 items);
         ListView listView = (ListView) findViewById(android.R.id.list);
@@ -52,37 +47,5 @@ public class ItemList extends ListActivity {
         });
     }
 
-    public List<Item> getItems() {
-        final List<Item> items = new ArrayList<Item>();
-        List<Double> location = new ArrayList<>();
-        location.add(42.3598);
-        location.add(71.0921);
 
-        items.add(new Item(
-                "myUsername",
-                "Laptop",
-                "This is an old Macbook air.",
-                location,
-                "http://zapp0.staticworld.net/reviews/graphics/products/uploaded/118242_g3.jpg",
-                "A8dZ",
-                new ArrayList<String>(),
-                false
-        ));
-
-        firebase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot snapshotItem: snapshot.getChildren()) {
-                    Map<String, Object> itemMap = (Map<String, Object>) snapshotItem.getValue();
-                    Item item = new Item(itemMap);
-                    items.add(item);
-                }
-            }
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
-            }
-        });
-        return items;
-    }
 }

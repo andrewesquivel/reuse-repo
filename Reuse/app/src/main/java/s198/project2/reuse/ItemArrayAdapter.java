@@ -1,6 +1,7 @@
 package s198.project2.reuse;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by rachelwang1994 on 4/23/15.
@@ -16,9 +27,103 @@ import java.util.List;
 public class ItemArrayAdapter extends ArrayAdapter<Item> {
     private Activity context;
     private List<Item> items;
+    public static final String FIREBASE_URL = "https://rswang.firebaseio.com";
+    private Firebase firebase;
+    private int layout;
+    private LayoutInflater mInflater;
+    private Map<String, Item> itemKeys;
+    private ChildEventListener firebaseListener;
 
-    public ItemArrayAdapter(Activity context, List<Item> items) {
+    public ItemArrayAdapter(Activity context, final List<Item> items) {
         super(context, R.layout.item_row_layout, items);
+        firebase = new Firebase(FIREBASE_URL).child("items");
+
+        this.items = new ArrayList<>();
+        this.itemKeys = new HashMap<>();
+
+        firebaseListener = this.firebase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                Map<String, Object> itemMap = (Map<String, Object>) dataSnapshot.getValue();
+                Item item = new Item(itemMap);
+                itemKeys.put(dataSnapshot.getKey(), item);
+
+                // Insert into the correct location, based on previousChildName
+                if (previousChildName == null) {
+                    items.add(0, item);
+                } else {
+                    Item previousItem = itemKeys.get(previousChildName);
+                    int previousIndex = items.indexOf(previousItem);
+                    int nextIndex = previousIndex + 1;
+                    if (nextIndex == items.size()) {
+                        items.add(item);
+                    } else {
+                        items.add(nextIndex, item);
+                    }
+                }
+
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                // One of the mModels changed. Replace it in our list and name mapping
+                String modelName = dataSnapshot.getKey();
+                Item oldItem = itemKeys.get(modelName);
+                Map<String, Object> itemMap = (Map<String, Object>) dataSnapshot.getValue();
+                Item newItem = new Item(itemMap);
+                int index = items.indexOf(oldItem);
+
+                items.set(index, newItem);
+                itemKeys.put(modelName, newItem);
+
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                // A model was removed from the list. Remove it from our list and the name mapping
+                String modelName = dataSnapshot.getKey();
+                Item oldItem = itemKeys.get(modelName);
+                items.remove(oldItem);
+                itemKeys.remove(modelName);
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+
+                // A model changed position in the list. Update our list accordingly
+                String modelName = dataSnapshot.getKey();
+                Item oldItem = itemKeys.get(modelName);
+
+                Map<String, Object> itemMap = (Map<String, Object>) dataSnapshot.getValue();
+                Item newItem = new Item(itemMap);
+                int index = items.indexOf(oldItem);
+                items.remove(index);
+                if (previousChildName == null) {
+                    items.add(0, newItem);
+                } else {
+                    Item previousModel = itemKeys.get(previousChildName);
+                    int previousIndex = items.indexOf(previousModel);
+                    int nextIndex = previousIndex + 1;
+                    if (nextIndex == items.size()) {
+                        items.add(newItem);
+                    } else {
+                        items.add(nextIndex, newItem);
+                    }
+                }
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.e("FirebaseListAdapter", "Listen was cancelled, no more updates will occur");
+            }
+
+        });
     }
 
     @Override
@@ -39,4 +144,12 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         // set image from url
         return convertView;
     }
+
+    public void cleanup() {
+        // We're being destroyed, let go of our mListener and forget about all of the mModels
+        firebase.removeEventListener(firebaseListener);
+        items.clear();
+        itemKeys.clear();
+    }
+
 }
