@@ -13,8 +13,6 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
-import com.firebase.client.ValueEventListener;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ import java.util.Map;
 public class ItemArrayAdapter extends ArrayAdapter<Item> {
     private Activity context;
     private List<Item> items;
-    public static final String FIREBASE_URL = "https://rswang.firebaseio.com";
+    public static final String FIREBASE_URL = "https://reuse-app.firebaseio.com";
     private Firebase firebase;
     private int layout;
     private LayoutInflater mInflater;

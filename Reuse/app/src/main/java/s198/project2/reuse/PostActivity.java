@@ -3,28 +3,23 @@ package s198.project2.reuse;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
 public class PostActivity extends Activity {
 
-    public static final String FIREBASE_URL = "https://rswang.firebaseio.com";
+    public static final String FIREBASE_URL = "https://reuse-app.firebaseio.com";
     private Firebase firebase;
 
     private String alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -81,6 +76,7 @@ public class PostActivity extends Activity {
 
     public void postItem (View v) {
         // get username
+        String userId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         // get name
         EditText etName = (EditText) findViewById(R.id.nameInput);
@@ -110,7 +106,7 @@ public class PostActivity extends Activity {
         List<String> tags = new ArrayList<String>();
 
         Item item = new Item(
-                "myUsername",
+                userId,
                 name,
                 description,
                 location,
