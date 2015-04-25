@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
 
 public class ItemActivity extends Activity {
@@ -19,6 +22,9 @@ public class ItemActivity extends Activity {
         tvName.setText(item.getName());
         TextView tvDescription = (TextView) findViewById(R.id.description);
         tvDescription.setText(item.getDescription());
+
+        ImageView ivItem = (ImageView) findViewById(R.id.itemImage);
+        UrlImageViewHelper.setUrlDrawable(ivItem, item.getPictureUrl());
 
     }
 

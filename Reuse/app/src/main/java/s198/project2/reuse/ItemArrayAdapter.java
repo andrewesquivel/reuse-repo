@@ -15,6 +15,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -141,7 +142,8 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
 
         tvName.setText(item.getName());
         tvDescription.setText(item.getDescription());
-        // set image from url
+        UrlImageViewHelper.setUrlDrawable(ivIcon, item.getPictureUrl());
+
         return convertView;
     }
 
