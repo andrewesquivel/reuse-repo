@@ -7,10 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-<<<<<<< HEAD
-=======
 import android.widget.EditText;
->>>>>>> fb11164e8005d0482936467f90c4bd5d883d5e2e
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,13 +68,13 @@ public class ItemActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-<<<<<<< HEAD
     public void viewItem(View view) {
         Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra("type", "single");
         intent.putExtra("item", item);
         startActivity(intent);
-=======
+    }
+
     public void claim(View v) {
         EditText claimCode = (EditText) findViewById(R.id.claimCode);
         String codeInput = claimCode.getText().toString();
@@ -86,12 +83,10 @@ public class ItemActivity extends Activity {
             //Toast toast = Toast.makeText(getApplicationContext(), key, Toast.LENGTH_LONG);
             //toast.show();
             //ref.removeValue();
-            
-        }
-        else {
+
+        } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect Claim Code!", Toast.LENGTH_LONG);
             toast.show();
         }
->>>>>>> fb11164e8005d0482936467f90c4bd5d883d5e2e
     }
 }
