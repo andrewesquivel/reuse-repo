@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +32,7 @@ public class PostActivity extends Activity {
     public static final String FIREBASE_URL = "https://reuse-app.firebaseio.com";
     private Firebase firebase;
 
-    private String alphabet = "abcdefghijklmnopqrstuvwxyz";
+    private final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
     private final String FILEPICKER_API_KEY = "AKzhkK4dxSBSbK9eNfY3vz";
 
@@ -117,7 +118,7 @@ public class PostActivity extends Activity {
         location.add(71.0921);
 
         //upload picture to filepicker
-        Filepicker.uploadLocalFile(fileUri, this);
+        Filepicker.uploadLocalFile(fileUri, getApplicationContext());
 
 
         // get filepicker url
@@ -140,13 +141,16 @@ public class PostActivity extends Activity {
                 description,
                 location,
                 pictureUrl,
-                "A8dZ",
+                code,
                 tags,
                 false // unclaimed
         );
 
         // push item to firebase
-        firebase.push().setValue(item);
+        Firebase ref = firebase.push();
+        item.setKey(ref.getKey());
+        ref.setValue(item);
+        Log.i("post item ", ref.getKey());
         Intent intent = new Intent(this, PostSuccessActivity.class);
         intent.putExtra("code", code);
         startActivity(intent);

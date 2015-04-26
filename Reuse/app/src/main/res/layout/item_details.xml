@@ -14,7 +14,7 @@
         android:id="@+id/name"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,13 +24,14 @@
         android:id="@+id/description"
         android:layout_below="@+id/name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp" />
+        android:layout_marginTop="20dp" />
 
     <ImageView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="100dp"
+        android:layout_height="200dp"
         android:id="@+id/itemImage"
         android:layout_below="@+id/description"
+<<<<<<< HEAD
         android:layout_centerHorizontal="true" />
     <Button
         android:layout_width="wrap_content"
@@ -40,6 +41,39 @@
         android:onClick="viewItem"
         android:layout_below="@+id/itemImage"
         android:layout_centerVertical="true"
+=======
+        android:layout_marginTop="20dp"
+>>>>>>> fb11164e8005d0482936467f90c4bd5d883d5e2e
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Claim code: "
+        android:layout_marginTop="20dp"
+        android:id="@+id/textView7"
+        android:layout_below="@+id/itemImage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/claimCode"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/itemImage"
+        android:layout_toRightOf="@+id/textView7"
+        android:layout_toEndOf="@+id/textView7" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Claim!"
+        android:id="@+id/claimButton"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/claimCode"
+        android:layout_centerHorizontal="true"
+        android:onClick="claim"/>
 
 </RelativeLayout>
