@@ -2,13 +2,8 @@ package s198.project2.reuse;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-<<<<<<< HEAD
 import java.util.ArrayList;
-=======
 import com.firebase.client.Firebase;
-
->>>>>>> fb11164e8005d0482936467f90c4bd5d883d5e2e
 import java.util.List;
 import java.util.Map;
 
