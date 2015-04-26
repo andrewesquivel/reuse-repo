@@ -1,9 +1,11 @@
 package s198.project2.reuse;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,13 +13,14 @@ import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
 
 public class ItemActivity extends Activity {
+    private Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_details);
         Bundle data = getIntent().getExtras();
-        Item item = (Item) data.getParcelable("item");
+        item = (Item) data.getParcelable("item");
         TextView tvName = (TextView) findViewById(R.id.name);
         tvName.setText(item.getName());
         TextView tvDescription = (TextView) findViewById(R.id.description);
@@ -49,5 +52,12 @@ public class ItemActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void viewItem(View view) {
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra("type", "single");
+        intent.putExtra("item", item);
+        startActivity(intent);
     }
 }

@@ -3,6 +3,7 @@ package s198.project2.reuse;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -67,7 +68,11 @@ public class Item implements Parcelable {
     }
 
     public List<Double> getLocation() {
-        return location;
+        //return location;
+        List<Double> locationTemp = new ArrayList<>();
+        locationTemp.add(42.3598);
+        locationTemp.add(-71.0921);
+        return locationTemp;
     }
 
     public String getPictureUrl() {
