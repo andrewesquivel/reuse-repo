@@ -3,6 +3,8 @@ package s198.project2.reuse;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.firebase.client.Firebase;
+
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +21,7 @@ public class Item implements Parcelable {
     private String code;
     private List<String> tags;
     private boolean claimed;
+    private String key;
 
     public Item(String user, String name, String description, List<Double> location,
                 String pictureUrl, String code, List<String> tags, boolean claimed) {
@@ -32,13 +35,14 @@ public class Item implements Parcelable {
         this.claimed = claimed;
     }
 
-    public Item(Map<String, Object> itemMap) {
+    public Item(Map<String, Object> itemMap, String modelName) {
         // this.user
         this.name = (String) itemMap.get("name");
         this.description = (String) itemMap.get("description");
         this.location = (List<Double>) itemMap.get("location");
         this.pictureUrl = (String) itemMap.get("pictureUrl");
         this.code = (String) itemMap.get("code");
+        this.key = modelName;
         // this.tags
 //        this.claimed = (boolean) itemMap.get("claimed");
     }
@@ -81,6 +85,10 @@ public class Item implements Parcelable {
     public List<String> getTags() {
         return tags;
     }
+
+    public String getKey() { return key; }
+
+    public void setKey(String key) {this.key = key;}
 
     public boolean isClaimed() {
         return claimed;
