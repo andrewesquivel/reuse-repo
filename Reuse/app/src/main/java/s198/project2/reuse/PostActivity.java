@@ -120,7 +120,6 @@ public class PostActivity extends Activity {
         //upload picture to filepicker
         Filepicker.uploadLocalFile(fileUri, getApplicationContext());
 
-
         // get filepicker url
         String pictureUrl = "http://zapp0.staticworld.net/reviews/graphics/products/uploaded/118242_g3.jpg";
 
@@ -150,7 +149,9 @@ public class PostActivity extends Activity {
         Firebase ref = firebase.push();
         item.setKey(ref.getKey());
         ref.setValue(item);
+
         Log.i("post item ", ref.getKey());
+        System.out.println(code);
         Intent intent = new Intent(this, PostSuccessActivity.class);
         intent.putExtra("code", code);
         startActivity(intent);

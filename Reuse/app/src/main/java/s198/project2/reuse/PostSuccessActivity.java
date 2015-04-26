@@ -16,6 +16,9 @@ public class PostSuccessActivity extends Activity {
         setContentView(R.layout.activity_post_success);
 
         Bundle data = getIntent().getExtras();
+        if (data == null) {
+            return;
+        }
         String code = data.getString("code");
 
         ((TextView)findViewById(R.id.textView6)).setText(code);

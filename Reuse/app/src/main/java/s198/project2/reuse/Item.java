@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import java.util.ArrayList;
 import com.firebase.client.Firebase;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -34,25 +36,28 @@ public class Item implements Parcelable {
         this.claimed = claimed;
     }
 
-    public Item(Map<String, Object> itemMap, String modelName) {
-        // this.user
+    public Item(Map<String, Object> itemMap) {
+        this.user = (String) itemMap.get("user");
         this.name = (String) itemMap.get("name");
         this.description = (String) itemMap.get("description");
         this.location = (List<Double>) itemMap.get("location");
         this.pictureUrl = (String) itemMap.get("pictureUrl");
         this.code = (String) itemMap.get("code");
-        this.key = modelName;
+        this.key = (String) itemMap.get("key");
         // this.tags
-//        this.claimed = (boolean) itemMap.get("claimed");
+        this.claimed = (boolean) itemMap.get("claimed");
     }
 
     public Item(Parcel in) {
         this.user = in.readString();
         this.name = in.readString();
         this.description = in.readString();
-        // this.location
+        this.location = new ArrayList<>();
+        this.location.add(in.readDouble());
+        this.location.add(in.readDouble());
         this.pictureUrl = in.readString();
         this.code = in.readString();
+        this.key = in.readString();
         // this.tags
         this.claimed = in.readByte() != 0;
     }
@@ -107,12 +112,13 @@ public class Item implements Parcelable {
         dest.writeString(user);
         dest.writeString(name);
         dest.writeString(description);
-        // location
+        dest.writeDouble(location.get(0));
+        dest.writeDouble(location.get(1));
         dest.writeString(pictureUrl);
         dest.writeString(code);
-        dest.writeByte((byte) (claimed ? 1 : 0));
+        dest.writeString(key);
         // tags
-        // boolean
+        dest.writeByte((byte) (claimed ? 1 : 0));
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {

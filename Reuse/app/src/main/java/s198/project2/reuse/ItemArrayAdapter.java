@@ -44,7 +44,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Map<String, Object> itemMap = (Map<String, Object>) dataSnapshot.getValue();
-                Item item = new Item(itemMap, dataSnapshot.getKey());
+                Item item = new Item(itemMap);
                 itemKeys.put(dataSnapshot.getKey(), item);
 
                 // Insert into the correct location, based on previousChildName
@@ -71,7 +71,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
                 String modelName = dataSnapshot.getKey();
                 Item oldItem = itemKeys.get(modelName);
                 Map<String, Object> itemMap = (Map<String, Object>) dataSnapshot.getValue();
-                Item newItem = new Item(itemMap, modelName);
+                Item newItem = new Item(itemMap);
                 int index = items.indexOf(oldItem);
 
                 items.set(index, newItem);
@@ -99,7 +99,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
                 Item oldItem = itemKeys.get(modelName);
 
                 Map<String, Object> itemMap = (Map<String, Object>) dataSnapshot.getValue();
-                Item newItem = new Item(itemMap, dataSnapshot.getKey());
+                Item newItem = new Item(itemMap);
                 int index = items.indexOf(oldItem);
                 items.remove(index);
                 if (previousChildName == null) {
