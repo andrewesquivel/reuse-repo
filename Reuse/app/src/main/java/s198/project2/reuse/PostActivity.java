@@ -3,7 +3,10 @@ package s198.project2.reuse;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,11 +16,17 @@ import android.widget.ImageView;
 
 import com.firebase.client.Firebase;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.filepicker.Filepicker;
+
 
 public class PostActivity extends Activity {
+    private int pic = 1;
+    private Uri fileUri;
 
     public static final String FIREBASE_URL = "https://reuse-app.firebaseio.com";
     private Firebase firebase;
@@ -56,20 +65,36 @@ public class PostActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private static int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 1;
+    private static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
 
     public void takePicture (View v) {
-        Intent camera_intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(camera_intent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        String path= Environment.getExternalStorageDirectory().getPath() + "/DCIM/Camera/";
+        File file = new File(path,"ReuseImage" + pic + ".jpg");
+        pic += 1;
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        fileUri = Uri.fromFile(file);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+
+        // start the image capture Intent
+        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 ImageView imageView = (ImageView) findViewById(R.id.imageView);
-                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                imageView.setImageBitmap(thumbnail);
+                imageView.setImageURI(fileUri);
+            }
+            else if (resultCode == RESULT_CANCELED) {
+            // User cancelled the image capture
+            } else {
+            // Image capture failed, advise user
             }
         }
     }
@@ -90,6 +115,10 @@ public class PostActivity extends Activity {
         List<Double> location = new ArrayList<>();
         location.add(42.3598);
         location.add(71.0921);
+
+        //upload picture to filepicker
+        Filepicker.uploadLocalFile(fileUri, this);
+
 
         // get filepicker url
         String pictureUrl = "http://zapp0.staticworld.net/reviews/graphics/products/uploaded/118242_g3.jpg";

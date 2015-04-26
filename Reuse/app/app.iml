@@ -94,10 +94,10 @@
     <orderEntry type="library" exported="" name="retrofit-1.9.0" level="project" />
     <orderEntry type="library" exported="" name="filepicker-android-3.8.13" level="project" />
     <orderEntry type="library" exported="" name="urlimageviewhelper-1.0.4" level="project" />
-    <orderEntry type="library" exported="" name="firebase-client-jvm-2.2.3" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />
-    <orderEntry type="library" exported="" name="jackson-core-2.2.2" level="project" />
+    <orderEntry type="library" exported="" name="firebase-client-jvm-2.2.3" level="project" />
     <orderEntry type="library" exported="" name="eventbus-2.2.1" level="project" />
+    <orderEntry type="library" exported="" name="jackson-core-2.2.2" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="jackson-databind-2.2.2" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
