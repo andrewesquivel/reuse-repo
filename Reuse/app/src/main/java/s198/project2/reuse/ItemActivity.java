@@ -82,7 +82,7 @@ public class ItemActivity extends Activity {
             Firebase ref = new Firebase(FIREBASE_URL + "/items/" + key);
             //Toast toast = Toast.makeText(getApplicationContext(), key, Toast.LENGTH_LONG);
             //toast.show();
-            //ref.removeValue();
+            ref.removeValue();
 
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect Claim Code!", Toast.LENGTH_LONG);
