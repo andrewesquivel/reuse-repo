@@ -18,21 +18,23 @@ public class Item implements Parcelable {
     private String name;
     private String description;
     private List<Double> location;
+    private String locationInput;
     private String pictureUrl;
     private String code;
-    private List<String> tags;
+    private String category;
     private boolean claimed;
     private String key;
 
     public Item(String user, String name, String description, List<Double> location,
-                String pictureUrl, String code, List<String> tags, boolean claimed) {
+                String locationInput, String pictureUrl, String code, String category, boolean claimed) {
         this.user = user;
         this.name = name;
         this.description = description;
         this.location = location;
+        this.locationInput = locationInput;
         this.pictureUrl = pictureUrl;
         this.code = code;
-        this.tags = tags;
+        this.category = category;
         this.claimed = claimed;
     }
 
@@ -41,10 +43,11 @@ public class Item implements Parcelable {
         this.name = (String) itemMap.get("name");
         this.description = (String) itemMap.get("description");
         this.location = (List<Double>) itemMap.get("location");
+        this.locationInput = (String) itemMap.get("locationInput");
         this.pictureUrl = (String) itemMap.get("pictureUrl");
         this.code = (String) itemMap.get("code");
         this.key = (String) itemMap.get("key");
-        // this.tags
+        this.category = (String) itemMap.get("category");
         this.claimed = (boolean) itemMap.get("claimed");
     }
 
@@ -55,10 +58,11 @@ public class Item implements Parcelable {
         this.location = new ArrayList<>();
         this.location.add(in.readDouble());
         this.location.add(in.readDouble());
+        this.locationInput = in.readString();
         this.pictureUrl = in.readString();
         this.code = in.readString();
         this.key = in.readString();
-        // this.tags
+        this.category = in.readString();
         this.claimed = in.readByte() != 0;
     }
 
@@ -90,13 +94,13 @@ public class Item implements Parcelable {
         return code;
     }
 
-    public List<String> getTags() {
-        return tags;
-    }
-
     public String getKey() { return key; }
 
     public void setKey(String key) {this.key = key;}
+
+    public String getCategory() {
+        return category;
+    }
 
     public boolean isClaimed() {
         return claimed;
@@ -117,7 +121,7 @@ public class Item implements Parcelable {
         dest.writeString(pictureUrl);
         dest.writeString(code);
         dest.writeString(key);
-        // tags
+        dest.writeString(category);
         dest.writeByte((byte) (claimed ? 1 : 0));
     }
 

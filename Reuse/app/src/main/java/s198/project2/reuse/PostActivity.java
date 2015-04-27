@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.cloudinary.Cloudinary;
 import com.firebase.client.Firebase;
@@ -52,6 +54,11 @@ public class PostActivity extends Activity {
         config.put("api_key", "778421991389216");
         config.put("api_secret", "U0lUKYDAb0jzXKHiJfc4EGFqQRM");
         cloudinary = new Cloudinary(config);
+
+        Spinner dropdown = (Spinner) findViewById(R.id.spinner);
+        String[] categories = new String[]{"Books", "Electronics", "Food", "Furniture", "Tickets & Coupons"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        dropdown.setAdapter(adapter);
     }
 
 
@@ -134,6 +141,9 @@ public class PostActivity extends Activity {
             location.add(42.3598);
             location.add(71.0921);
 
+            // get locationInput
+            EditText etLocation = (EditText) findViewById(R.id.locationInput);
+            String locationInput = etLocation.getText().toString();
 
             // get filepicker url
             String pictureUrl = "";
@@ -176,16 +186,18 @@ public class PostActivity extends Activity {
                 ;
             }
             // get tags
-            List<String> tags = new ArrayList<String>();
+            Spinner spCategory = (Spinner) findViewById(R.id.spinner);
+            String category = spCategory.getSelectedItem().toString();
 
             Item item = new Item(
                     userId,
                     name,
                     description,
                     location,
+                    locationInput,
                     pictureUrl,
                     code,
-                    tags,
+                    category,
                     false // unclaimed
             );
 
