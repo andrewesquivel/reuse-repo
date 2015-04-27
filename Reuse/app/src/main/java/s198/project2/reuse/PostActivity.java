@@ -151,29 +151,30 @@ public class PostActivity extends Activity {
             }
 
             //upload picture to cloudinary
-            final Map<String, String> options = new HashMap<>();
-            options.put("public_id", code);
-            try
+            if (fileUri != null) {
+                final Map<String, String> options = new HashMap<>();
+                options.put("public_id", code);
+                try
 
-            {
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), fileUri);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-                byte[] bitmapdata = bos.toByteArray();
-                ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+                {
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), fileUri);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                    byte[] bitmapdata = bos.toByteArray();
+                    ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
 
-                Map<String, String> uploadResult = cloudinary.uploader().upload(bs, options);
-                pictureUrl = uploadResult.get("url");
-            } catch (
-                    IOException e
-                    )
+                    Map<String, String> uploadResult = cloudinary.uploader().upload(bs, options);
+                    pictureUrl = uploadResult.get("url");
+                } catch (
+                        IOException e
+                        )
 
-            {
-                Log.i("IOException", fileUri.toString());
+                {
+                    Log.i("IOException", fileUri.toString());
+                }
+
+                ;
             }
-
-            ;
-
             // get tags
             List<String> tags = new ArrayList<String>();
 
