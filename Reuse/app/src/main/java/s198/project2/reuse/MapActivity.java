@@ -1,9 +1,9 @@
 package s198.project2.reuse;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,7 +13,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 //import android
@@ -21,16 +20,26 @@ import java.util.List;
 
 public class MapActivity extends FragmentActivity {
 
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private Bundle extras;
+    private GoogleMap mMap;
+    private Parcelable type;
+    private Item mItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        extras = getIntent().getExtras();
+        Bundle extras = (Bundle) getIntent().getExtras();
+        Log.i("RECIEVED", extras.toString());
+        type = extras.getParcelable("type");
+        Log.i("TYPE", type.toString());
+        if(type.toString().equals("single")){
+            mItem = extras.getParcelable("item");
+        }
+
+
         setUpMapIfNeeded();
     }
+
 
 
     @Override
@@ -74,7 +83,7 @@ public class MapActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        String type = extras.getString("type");
+
         if (type.equals("single")) {
             setUpSingleViewMap();
         } else {
@@ -84,8 +93,8 @@ public class MapActivity extends FragmentActivity {
 
     private void setUpMultiViewMap() {
         Log.i("TYPE", "multi");
-        List<Item> items = new ArrayList<>();
-        ArrayAdapter<Item> adapter = new ItemArrayAdapter(this, items);
+        List<Item> items = null;
+        items = new ItemArrayAdapter(this, items).getItems();
 
         int numItems =0;
         LatLngBounds bound = null;
@@ -93,9 +102,7 @@ public class MapActivity extends FragmentActivity {
 
 
         for (Item i : items) {
-
-            Item item = extras.getParcelable("item");
-            List<Double> location = item.getLocation();
+            List<Double> location = i.getLocation();
             LatLng coordinates = new LatLng(location.get(0), location.get(1));
             if(numItems == 0){
                 bound = new LatLngBounds(coordinates, coordinates);
@@ -118,14 +125,13 @@ public class MapActivity extends FragmentActivity {
     }
 
     private void setUpSingleViewMap(){
-        Item item = extras.getParcelable("item");
-        Log.i("ITEM", item.toString());
-        List<Double> location = item.getLocation();
+        Log.i("ITEM", mItem.toString());
+        List<Double> location = mItem.getLocation();
         Log.i("LOCATION", location.toString());
         LatLng coordinates = new LatLng(location.get(0), location.get(1));
         Log.i("COORDINATES", coordinates.toString());
 
-        mMap.addMarker(new MarkerOptions().position(coordinates).title(item.getName()));
+        mMap.addMarker(new MarkerOptions().position(coordinates).title(mItem.getName()));
         // Construct a CameraPosition focusing on Mountain View and animate the camera to that position.
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(coordinates)      // Sets the center of the map to Mountain View

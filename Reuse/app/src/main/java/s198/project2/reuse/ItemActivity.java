@@ -72,6 +72,7 @@ public class ItemActivity extends Activity {
         Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra("type", "single");
         intent.putExtra("item", item);
+        Log.i("EXTRAS", intent.getExtras().toString());
         startActivity(intent);
     }
 

@@ -151,5 +151,8 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         items.clear();
         itemKeys.clear();
     }
+    public List<Item> getItems(){
+        return items;
+    }
 
 }

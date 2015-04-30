@@ -3,6 +3,7 @@ package s198.project2.reuse;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,18 +21,23 @@ import android.widget.Spinner;
 
 import com.cloudinary.Cloudinary;
 import com.firebase.client.Firebase;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
-public class PostActivity extends Activity {
+public class PostActivity extends Activity implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private int pic = 1;
     private Uri fileUri;
 
@@ -42,6 +48,11 @@ public class PostActivity extends Activity {
 
     private final String FILEPICKER_API_KEY = "AKzhkK4dxSBSbK9eNfY3vz";
     private Cloudinary cloudinary;
+
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+    private BreakIterator mLatitudeText;
+    private BreakIterator mLongitudeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +70,7 @@ public class PostActivity extends Activity {
         String[] categories = new String[]{"Books", "Electronics", "Food", "Furniture", "Tickets & Coupons"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
         dropdown.setAdapter(adapter);
+        buildGoogleApiClient();
     }
 
 
@@ -122,6 +134,34 @@ public class PostActivity extends Activity {
         new postTask().execute();
     }
 
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
+            mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
     class postTask extends AsyncTask<String,String,String> {
 
         protected String doInBackground(String... params) {
@@ -138,8 +178,17 @@ public class PostActivity extends Activity {
 
             // get location
             List<Double> location = new ArrayList<>();
+//            try {
+//                location.add(mLastLocation.getLatitude());
+//                location.add(mLastLocation.getLongitude());
+//            }catch(Exception e){
+//                location.add(42.3598);
+//                location.add(71.0921);
+//            }
             location.add(42.3598);
             location.add(71.0921);
+
+
 
             // get locationInput
             EditText etLocation = (EditText) findViewById(R.id.locationInput);
