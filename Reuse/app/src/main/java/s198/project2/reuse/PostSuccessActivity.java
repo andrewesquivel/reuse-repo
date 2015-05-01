@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 
@@ -45,5 +46,9 @@ public class PostSuccessActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void homeScreen(View v){
+        finish();
     }
 }

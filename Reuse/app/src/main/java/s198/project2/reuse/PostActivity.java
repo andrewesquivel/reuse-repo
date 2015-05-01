@@ -262,6 +262,7 @@ public class PostActivity extends Activity implements
             intent.putExtra("code", code);
 
             startActivity(intent);
+            finish();
             return "";
         }
     }
