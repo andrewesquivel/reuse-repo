@@ -21,16 +21,16 @@ import java.util.List;
 public class MapActivity extends FragmentActivity {
 
     private GoogleMap mMap;
-    private Parcelable type;
+    private String type;
     private Item mItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        Bundle extras = (Bundle) getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
         Log.i("RECIEVED", extras.toString());
-        type = extras.getParcelable("type");
+        type = extras.getString("type");
         Log.i("TYPE", type.toString());
         if(type.toString().equals("single")){
             mItem = extras.getParcelable("item");
