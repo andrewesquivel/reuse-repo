@@ -134,7 +134,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_toRightOf="@+id/textView4"
-            android:layout_toEndOf="@+id/textView4" />
+            android:layout_toEndOf="@+id/textView4"
+            android:soundEffectsEnabled="false"/>
 
     </RelativeLayout>
 </ScrollView>

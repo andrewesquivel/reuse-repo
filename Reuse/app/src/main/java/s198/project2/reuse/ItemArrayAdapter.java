@@ -33,7 +33,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
     private Map<String, Item> itemKeys;
     private ChildEventListener firebaseListener;
 
-    public ItemArrayAdapter(Activity context, final List<Item> items) {
+    public ItemArrayAdapter(Activity context, final List<Item> items, final String category) {
         super(context, R.layout.item_row_layout, items);
         firebase = new Firebase(FIREBASE_URL).child("items");
 
@@ -45,23 +45,25 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Map<String, Object> itemMap = (Map<String, Object>) dataSnapshot.getValue();
                 Item item = new Item(itemMap);
-                itemKeys.put(dataSnapshot.getKey(), item);
+                if (item.getCategory().equals(category) || category == null) {
+                    itemKeys.put(dataSnapshot.getKey(), item);
 
-                // Insert into the correct location, based on previousChildName
-                if (previousChildName == null) {
-                    items.add(0, item);
-                } else {
-                    Item previousItem = itemKeys.get(previousChildName);
-                    int previousIndex = items.indexOf(previousItem);
-                    int nextIndex = previousIndex + 1;
-                    if (nextIndex == items.size()) {
-                        items.add(item);
+                    // Insert into the correct location, based on previousChildName
+                    if (previousChildName == null) {
+                        items.add(0, item);
                     } else {
-                        items.add(nextIndex, item);
+                        Item previousItem = itemKeys.get(previousChildName);
+                        int previousIndex = items.indexOf(previousItem);
+                        int nextIndex = previousIndex + 1;
+                        if (nextIndex == items.size()) {
+                            items.add(item);
+                        } else {
+                            items.add(nextIndex, item);
+                        }
                     }
-                }
 
-                notifyDataSetChanged();
+                    notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -85,10 +87,12 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
 
                 // A model was removed from the list. Remove it from our list and the name mapping
                 String modelName = dataSnapshot.getKey();
-                Item oldItem = itemKeys.get(modelName);
-                items.remove(oldItem);
-                itemKeys.remove(modelName);
-                notifyDataSetChanged();
+                if (itemKeys.containsKey(modelName)) {
+                    Item oldItem = itemKeys.get(modelName);
+                    items.remove(oldItem);
+                    itemKeys.remove(modelName);
+                    notifyDataSetChanged();
+                }
             }
 
             @Override

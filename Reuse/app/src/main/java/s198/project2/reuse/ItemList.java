@@ -1,5 +1,6 @@
 package s198.project2.reuse;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +20,23 @@ import java.util.List;
  */
 public class ItemList extends ListActivity {
     public List<Item> items;
+    public Activity activity;
 
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
         setContentView(R.layout.item_list_view);
+        activity = this;
+
+        Spinner dropdown = (Spinner) findViewById(R.id.spinner2);
+        String[] categories = new String[]{"All", "Books", "Electronics", "Food", "Furniture", "Tickets & Coupons"};
+        ArrayAdapter<String> spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        dropdown.setAdapter(spinAdapter);
+
 
         items = new ArrayList<>();
-        ArrayAdapter<Item> adapter = new ItemArrayAdapter(this,
-                items);
-        ListView listView = (ListView) findViewById(android.R.id.list);
+        ArrayAdapter<Item> adapter = new ItemArrayAdapter(this, items, null);
+        final ListView listView = (ListView) findViewById(android.R.id.list);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -42,6 +51,23 @@ public class ItemList extends ListActivity {
             }
 
         });
+
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                String category = (String) parentView.getItemAtPosition(position);
+                if (!category.equals("All")){
+                    items = new ArrayList<Item>();
+                    listView.setAdapter(new ItemArrayAdapter(activity, items, category));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) { }
+        });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

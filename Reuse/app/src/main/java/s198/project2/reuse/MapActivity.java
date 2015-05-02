@@ -94,7 +94,7 @@ public class MapActivity extends FragmentActivity {
     private void setUpMultiViewMap() {
         Log.i("TYPE", "multi");
         List<Item> items = null;
-        items = new ItemArrayAdapter(this, items).getItems();
+        items = new ItemArrayAdapter(this, items, null).getItems();
 
         int numItems =0;
         LatLngBounds bound = null;

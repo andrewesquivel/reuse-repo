@@ -3,9 +3,19 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner2"
+        android:spinnerMode="dropdown"
+        android:soundEffectsEnabled="false"
+        />
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="20dp"
         android:id="@android:id/list"
-        android:layout_gravity="center_horizontal" />
+        android:layout_marginTop="30dp"
+        />
 </LinearLayout>
