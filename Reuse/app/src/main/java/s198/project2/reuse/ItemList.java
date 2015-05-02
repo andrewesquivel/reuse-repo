@@ -30,7 +30,7 @@ public class ItemList extends ListActivity {
         activity = this;
 
         Spinner dropdown = (Spinner) findViewById(R.id.spinner2);
-        String[] categories = new String[]{"All", "Books", "Electronics", "Food", "Furniture", "Tickets & Coupons"};
+        String[] categories = new String[]{"All", "Books", "Electronics", "Food", "Furniture", "Tickets & Coupons", "Miscellaneous"};
         ArrayAdapter<String> spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
         dropdown.setAdapter(spinAdapter);
 
