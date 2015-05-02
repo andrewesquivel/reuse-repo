@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -61,6 +62,7 @@ public class PostActivity extends Activity implements
         setContentView(R.layout.activity_post);
         firebase = new Firebase(FIREBASE_URL).child("items");
 
+        ((Button) findViewById(R.id.button2)).setEnabled(true);
         Map config = new HashMap();
         config.put("cloud_name", "dqm3svvyq");
         config.put("api_key", "778421991389216");
@@ -142,6 +144,8 @@ public class PostActivity extends Activity implements
             toast.show();
             return;
         }
+
+        ((Button) findViewById(R.id.button2)).setEnabled(false);
         new postTask().execute();
     }
 
