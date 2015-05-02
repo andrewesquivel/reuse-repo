@@ -2,6 +2,9 @@ package s198.project2.reuse;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -14,6 +17,10 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class ItemActivity extends Activity {

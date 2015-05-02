@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.cloudinary.Cloudinary;
 import com.firebase.client.Firebase;
@@ -67,7 +68,7 @@ public class PostActivity extends Activity implements
         cloudinary = new Cloudinary(config);
 
         Spinner dropdown = (Spinner) findViewById(R.id.spinner);
-        String[] categories = new String[]{"Books", "Electronics", "Food", "Furniture", "Tickets & Coupons"};
+        String[] categories = new String[]{"Miscellaneous", "Books", "Electronics", "Food", "Furniture", "Tickets & Coupons"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
         dropdown.setAdapter(adapter);
         buildGoogleApiClient();
@@ -131,6 +132,16 @@ public class PostActivity extends Activity implements
     }
 
     public void postItem (View v) {
+        if (((EditText) findViewById(R.id.nameInput)).getText().toString().equals("")){
+            Toast toast = Toast.makeText(getApplicationContext(), "Please enter an item name.", Toast.LENGTH_LONG);
+            toast.show();
+            return;
+        }
+        if (((EditText) findViewById(R.id.locationInput)).getText().toString().equals("")){
+            Toast toast = Toast.makeText(getApplicationContext(), "Please enter a location.", Toast.LENGTH_LONG);
+            toast.show();
+            return;
+        }
         new postTask().execute();
     }
 
@@ -188,8 +199,6 @@ public class PostActivity extends Activity implements
             location.add(42.3598);
             location.add(71.0921);
 
-
-
             // get locationInput
             EditText etLocation = (EditText) findViewById(R.id.locationInput);
             String locationInput = etLocation.getText().toString();
@@ -225,15 +234,9 @@ public class PostActivity extends Activity implements
 
                     Map<String, String> uploadResult = cloudinary.uploader().upload(bs, options);
                     pictureUrl = uploadResult.get("url");
-                } catch (
-                        IOException e
-                        )
-
-                {
+                } catch (IOException e) {
                     Log.i("IOException", fileUri.toString());
-                }
-
-                ;
+                };
             }
             // get tags
             Spinner spCategory = (Spinner) findViewById(R.id.spinner);

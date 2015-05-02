@@ -118,6 +118,7 @@ public class Item implements Parcelable {
         dest.writeString(description);
         dest.writeDouble(location.get(0));
         dest.writeDouble(location.get(1));
+        dest.writeString(locationInput);
         dest.writeString(pictureUrl);
         dest.writeString(code);
         dest.writeString(key);
