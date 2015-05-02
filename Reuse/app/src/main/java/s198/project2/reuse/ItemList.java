@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +36,8 @@ public class ItemList extends ListActivity {
 
 
         items = new ArrayList<>();
-        ArrayAdapter<Item> adapter = new ItemArrayAdapter(this, items, null);
+        final String userId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        ArrayAdapter<Item> adapter = new ItemArrayAdapter(this, items, null, userId);
         final ListView listView = (ListView) findViewById(android.R.id.list);
         listView.setAdapter(adapter);
 
@@ -60,7 +62,10 @@ public class ItemList extends ListActivity {
                 String category = (String) parentView.getItemAtPosition(position);
                 if (!category.equals("All")){
                     items = new ArrayList<Item>();
-                    listView.setAdapter(new ItemArrayAdapter(activity, items, category));
+                    listView.setAdapter(new ItemArrayAdapter(activity, items, category, userId));
+                }
+                else {
+                    listView.setAdapter(new ItemArrayAdapter(activity, items, null, userId));
                 }
             }
 

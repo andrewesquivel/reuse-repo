@@ -1,6 +1,7 @@
 package s198.project2.reuse;
 
 import android.app.Activity;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
     private Map<String, Item> itemKeys;
     private ChildEventListener firebaseListener;
 
-    public ItemArrayAdapter(Activity context, final List<Item> items, final String category) {
+    public ItemArrayAdapter(Activity context, final List<Item> items, final String category, final String userId) {
         super(context, R.layout.item_row_layout, items);
         firebase = new Firebase(FIREBASE_URL).child("items");
 
@@ -45,7 +46,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Map<String, Object> itemMap = (Map<String, Object>) dataSnapshot.getValue();
                 Item item = new Item(itemMap);
-                if (item.getCategory().equals(category) || category == null) {
+                if ((item.getCategory().equals(category) || category == null) && (!item.isClaimed() || item.getUser().equals(userId))) {
                     itemKeys.put(dataSnapshot.getKey(), item);
 
                     // Insert into the correct location, based on previousChildName

@@ -2,6 +2,7 @@ package s198.project2.reuse;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
@@ -92,9 +93,10 @@ public class MapActivity extends FragmentActivity {
     }
 
     private void setUpMultiViewMap() {
+        final String userId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         Log.i("TYPE", "multi");
         List<Item> items = null;
-        items = new ItemArrayAdapter(this, items, null).getItems();
+        items = new ItemArrayAdapter(this, items, null, userId).getItems();
 
         int numItems =0;
         LatLngBounds bound = null;

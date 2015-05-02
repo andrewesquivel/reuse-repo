@@ -221,7 +221,6 @@ public class PostActivity extends Activity implements
                 rand = (int) Math.round(25 * Math.random());
                 code += alphabet.substring(rand, rand + 1);
             }
-
             //upload picture to cloudinary
             if (fileUri != null) {
                 final Map<String, String> options = new HashMap<>();

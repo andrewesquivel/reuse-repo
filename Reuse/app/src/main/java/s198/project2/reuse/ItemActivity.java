@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,6 +51,11 @@ public class ItemActivity extends Activity {
 
         firebase = new Firebase(FIREBASE_URL).child("items");
 
+        String userId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        if (userId.equals(item.getUser())){
+            Log.i("user", "this is user's own item");
+        }
+
     }
 
 
@@ -90,7 +96,7 @@ public class ItemActivity extends Activity {
             Firebase ref = new Firebase(FIREBASE_URL + "/items/" + key);
             //Toast toast = Toast.makeText(getApplicationContext(), key, Toast.LENGTH_LONG);
             //toast.show();
-            ref.removeValue();
+            ref.child("claimed").setValue(true);
 
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect Claim Code!", Toast.LENGTH_LONG);
