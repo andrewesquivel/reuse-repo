@@ -10,7 +10,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:contentDescription="TODO"
-        android:src="@drawable/biology" />
+        android:src="@drawable/biology"
+        android:layout_marginRight="5dp"/>
 
     <TextView
         android:id="@+id/description"

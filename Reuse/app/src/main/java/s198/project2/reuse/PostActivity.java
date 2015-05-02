@@ -231,7 +231,19 @@ public class PostActivity extends Activity implements
                 {
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), fileUri);
-                    Bitmap resized = Bitmap.createScaledBitmap(bitmap, 200, 400, true);
+                    int h = bitmap.getHeight();
+                    int w = bitmap.getWidth();
+                    if (h > w){
+                        double ratio = 400/(double)h;
+                        h *= ratio;
+                        w *= ratio;
+                    }
+                    else {
+                        double ratio = 400/(double)w;
+                        h *= ratio;
+                        w *= ratio;
+                    }
+                    Bitmap resized = Bitmap.createScaledBitmap(bitmap, w, h, true);
                     resized.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
                     byte[] bitmapdata = bos.toByteArray();
                     ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
