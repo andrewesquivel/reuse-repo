@@ -1,6 +1,8 @@
 package s198.project2.reuse;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -94,10 +96,23 @@ public class ItemActivity extends Activity {
         String codeInput = claimCode.getText().toString();
         if (codeInput.equals(code)) {
             Firebase ref = new Firebase(FIREBASE_URL + "/items/" + key);
-            //Toast toast = Toast.makeText(getApplicationContext(), key, Toast.LENGTH_LONG);
-            //toast.show();
-            ref.child("claimed").setValue(true);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    this);
 
+            alertDialogBuilder.setTitle("Claim Item");
+
+            alertDialogBuilder
+                    .setMessage("You have successfully claimed the item!")
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+            ref.child("claimed").setValue(true);
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect Claim Code!", Toast.LENGTH_LONG);
             toast.show();

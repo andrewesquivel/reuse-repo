@@ -148,6 +148,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         UrlImageViewHelper.setUrlDrawable(ivIcon, item.getPictureUrl());
 
         return convertView;
+
     }
 
     public void cleanup() {
