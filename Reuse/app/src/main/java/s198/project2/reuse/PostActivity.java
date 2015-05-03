@@ -74,6 +74,7 @@ public class PostActivity extends Activity implements
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
         dropdown.setAdapter(adapter);
         buildGoogleApiClient();
+        mGoogleApiClient.connect();
     }
 
 
@@ -139,11 +140,11 @@ public class PostActivity extends Activity implements
             toast.show();
             return;
         }
-        if (((EditText) findViewById(R.id.locationInput)).getText().toString().equals("")){
-            Toast toast = Toast.makeText(getApplicationContext(), "Please enter a location.", Toast.LENGTH_LONG);
-            toast.show();
-            return;
-        }
+//        if (((EditText) findViewById(R.id.locationInput)).getText().toString().equals("")){
+//            Toast toast = Toast.makeText(getApplicationContext(), "Please enter a location.", Toast.LENGTH_LONG);
+//            toast.show();
+//            return;
+//        }
 
         ((Button) findViewById(R.id.button2)).setEnabled(false);
         new postTask().execute();
@@ -161,21 +162,12 @@ public class PostActivity extends Activity implements
     public void onConnected(Bundle connectionHint) {
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
-        if (mLastLocation != null) {
-            mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
-            mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
-        }
     }
 
     @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
+    public void onConnectionSuspended(int i) {}
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
-    }
+    public void onConnectionFailed(ConnectionResult connectionResult) {}
 
     class postTask extends AsyncTask<String,String,String> {
 
@@ -193,15 +185,15 @@ public class PostActivity extends Activity implements
 
             // get location
             List<Double> location = new ArrayList<>();
-//            try {
-//                location.add(mLastLocation.getLatitude());
-//                location.add(mLastLocation.getLongitude());
-//            }catch(Exception e){
-//                location.add(42.3598);
-//                location.add(71.0921);
-//            }
-            location.add(42.3598);
-            location.add(71.0921);
+            try {
+                location.add(mLastLocation.getLatitude());
+                location.add(mLastLocation.getLongitude());
+            }catch(Exception e){
+                location.add(42.3598);
+                location.add(-71.0921);
+            }
+//            location.add(42.3598);
+//            location.add(71.0921);
 
             // get locationInput
             EditText etLocation = (EditText) findViewById(R.id.locationInput);

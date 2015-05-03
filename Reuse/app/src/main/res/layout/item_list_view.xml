@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,5 +19,18 @@
         android:id="@android:id/list"
         android:layout_marginTop="30dp"
         />
-    
-</LinearLayout>
+
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/list_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:src="@drawable/ic_action_map"
+        fab:fab_colorNormal="@color/green"
+        fab:fab_colorPressed="@color/cream"
+        fab:fab_colorRipple="@color/white"
+        android:onClick="viewItems"
+        android:layout_marginRight="36dp"
+        android:layout_marginBottom="36dp" />
+
+</FrameLayout>
