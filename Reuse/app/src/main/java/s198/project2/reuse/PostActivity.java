@@ -30,6 +30,7 @@ import com.google.android.gms.location.LocationServices;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.BreakIterator;
 import java.util.ArrayList;
@@ -124,7 +125,24 @@ public class PostActivity extends Activity implements
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 ImageView imageView = (ImageView) findViewById(R.id.imageView);
-                imageView.setImageURI(fileUri);
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), fileUri);
+                    int h = bitmap.getHeight();
+                    int w = bitmap.getWidth();
+                    if (h > w){
+                        double ratio = 400/(double)h;
+                        h *= ratio;
+                        w *= ratio;
+                    }
+                    else {
+                        double ratio = 400/(double)w;
+                        h *= ratio;
+                        w *= ratio;
+                    }
+                    Bitmap resized = Bitmap.createScaledBitmap(bitmap, w, h, true);
+                    imageView.setImageBitmap(resized);
+                } catch (IOException e){ };
+
             }
             else if (resultCode == RESULT_CANCELED) {
             // User cancelled the image capture
