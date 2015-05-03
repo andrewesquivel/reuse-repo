@@ -192,9 +192,6 @@ public class PostActivity extends Activity implements
                 location.add(42.3598);
                 location.add(-71.0921);
             }
-//            location.add(42.3598);
-//            location.add(71.0921);
-
             // get locationInput
             EditText etLocation = (EditText) findViewById(R.id.locationInput);
             String locationInput = etLocation.getText().toString();

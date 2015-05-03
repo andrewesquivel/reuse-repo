@@ -1,7 +1,6 @@
 package s198.project2.reuse;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -24,6 +23,7 @@ public class MapActivity extends FragmentActivity {
     private GoogleMap mMap;
     private String type;
     private Item mItem;
+    private List<Item> mItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,8 @@ public class MapActivity extends FragmentActivity {
         Log.i("TYPE", type.toString());
         if(type.toString().equals("single")){
             mItem = extras.getParcelable("item");
+        }else{
+            mItems = (List<Item>) extras.getSerializable("items");
         }
 
 
@@ -95,15 +97,14 @@ public class MapActivity extends FragmentActivity {
     private void setUpMultiViewMap() {
         final String userId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         Log.i("TYPE", "multi");
-        List<Item> items = null;
-        items = new ItemArrayAdapter(this, items, null, userId).getItems();
+
 
         int numItems =0;
         LatLngBounds bound = null;
-        Log.i("ITEMS", ""+items.size());
+        Log.i("ITEMS", ""+mItems.size());
 
 
-        for (Item i : items) {
+        for (Item i : mItems) {
             List<Double> location = i.getLocation();
             LatLng coordinates = new LatLng(location.get(0), location.get(1));
             if(numItems == 0){
@@ -118,7 +119,7 @@ public class MapActivity extends FragmentActivity {
 //        Log.i("BOUNDS", bound.toString());
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(bound.getCenter())      // Sets the center of the map to Mountain View
-                .zoom(17)                   // Sets the zoom
+                .zoom(15)                   // Sets the zoom
                 .bearing(0)                // Sets the orientation of the camera to east
                 .tilt(30)                   // Sets the tilt of the camera to 30 degrees
                 .build();                   // Creates a CameraPosition from the builder
