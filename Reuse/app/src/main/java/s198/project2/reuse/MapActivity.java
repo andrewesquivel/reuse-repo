@@ -114,7 +114,7 @@ public class MapActivity extends FragmentActivity {
                 bound = bound.including(coordinates);
             }
             mMap.addMarker(new MarkerOptions().position(coordinates).title(i.getName()));
-            Log.i("MARKER", "added");
+//            Log.i("MARKER", "added");
         }
 //        Log.i("BOUNDS", bound.toString());
         CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -124,7 +124,7 @@ public class MapActivity extends FragmentActivity {
                 .tilt(30)                   // Sets the tilt of the camera to 30 degrees
                 .build();                   // Creates a CameraPosition from the builder
         Log.i("POSITION", cameraPosition.toString());
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bound, 500,500,50));
     }
 
     private void setUpSingleViewMap(){

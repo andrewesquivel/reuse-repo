@@ -2,6 +2,7 @@ package s198.project2.reuse;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
 public class ItemList extends ListActivity {
     public List<Item> items;
     public Activity activity;
+    private ArrayAdapter<Item> adapter;
 
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -36,7 +39,7 @@ public class ItemList extends ListActivity {
 
         items = new ArrayList<>();
         final String userId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        ArrayAdapter<Item> adapter = new ItemArrayAdapter(this, items, null, userId);
+        adapter = new ItemArrayAdapter(this, items, null, userId);
         final ListView listView = (ListView) findViewById(android.R.id.list);
         listView.setAdapter(adapter);
 
@@ -61,6 +64,7 @@ public class ItemList extends ListActivity {
                 String category = (String) parentView.getItemAtPosition(position);
                 if (!category.equals("All")){
                     items = new ArrayList<Item>();
+
                     listView.setAdapter(new ItemArrayAdapter(activity, items, category, userId));
                 }
                 else {
@@ -74,11 +78,20 @@ public class ItemList extends ListActivity {
 
     }
     public void viewItems(View view){
-        Intent intent = new Intent(this, MapActivity.class);
-        intent.putExtra("type", "multi");
-        intent.putExtra("items", (java.io.Serializable) items);
-        Log.i("EXTRAS", intent.getExtras().toString());
-        startActivity(intent);
+        if(items.size() > 0) {
+            Intent intent = new Intent(this, MapActivity.class);
+            intent.putExtra("type", "multi");
+            intent.putExtra("items", (java.io.Serializable) items);
+            Log.i("EXTRAS", intent.getExtras().toString());
+            startActivity(intent);
+        }else{
+            Context context = getApplicationContext();
+            CharSequence text = "No Items To Display";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
 
 
