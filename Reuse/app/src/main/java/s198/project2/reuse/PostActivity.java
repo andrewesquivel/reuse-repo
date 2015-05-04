@@ -158,11 +158,11 @@ public class PostActivity extends Activity implements
             toast.show();
             return;
         }
-//        if (((EditText) findViewById(R.id.locationInput)).getText().toString().equals("")){
-//            Toast toast = Toast.makeText(getApplicationContext(), "Please enter a location.", Toast.LENGTH_LONG);
-//            toast.show();
-//            return;
-//        }
+        if (((EditText) findViewById(R.id.locationInput)).getText().toString().equals("")){
+            Toast toast = Toast.makeText(getApplicationContext(), "Please enter a location.", Toast.LENGTH_LONG);
+            toast.show();
+            return;
+        }
 
         ((Button) findViewById(R.id.button2)).setEnabled(false);
         new postTask().execute();
