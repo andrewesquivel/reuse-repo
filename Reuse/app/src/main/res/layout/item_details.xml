@@ -4,7 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="s198.project2.reuse.ItemActivity">
+    tools:context="s198.project2.reuse.ItemActivity"
+    android:background="@color/cream">
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,11 +36,14 @@
         android:layout_marginTop="20dp"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="View on Map"
         android:id="@+id/view_button"
         android:onClick="viewItem"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@color/green"
         android:layout_below="@+id/itemImage"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
@@ -76,11 +80,14 @@
         android:visibility="gone"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Claim!"
         android:id="@+id/claimButton"
         android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@color/green"
         android:layout_below="@+id/claimCode"
         android:layout_centerHorizontal="true"
         android:onClick="claim"/>
@@ -88,9 +95,11 @@
     <TextView
         android:id="@+id/claimed"
         android:text="Claimed!"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:textStyle="bold"
         android:layout_below="@+id/claimButton"
         android:layout_centerHorizontal="true"
         android:visibility="gone"/>

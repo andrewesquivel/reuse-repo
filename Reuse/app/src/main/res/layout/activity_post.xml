@@ -4,19 +4,23 @@
     android:layout_height="wrap_content"
     tools:context="s198.project2.reuse.PostActivity"
     android:id="@+id/layout"
-    >
+    android:background="@color/cream">
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Add Picture"
             android:id="@+id/button"
             android:onClick="takePicture"
             android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@color/green"
             android:layout_alignParentTop="@+id/imageView"
             android:layout_below="@+id/imageView"
             android:layout_centerHorizontal="true" />
@@ -109,11 +113,14 @@
             android:layout_marginTop="20dp" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Post Item"
             android:id="@+id/button2"
             android:onClick="postItem"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@color/green"
             android:layout_marginTop="50dp"
             android:layout_below="@+id/textView5"
             android:layout_centerHorizontal="true" />
