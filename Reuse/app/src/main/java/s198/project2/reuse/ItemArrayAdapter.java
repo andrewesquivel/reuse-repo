@@ -80,7 +80,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
                 int index = items.indexOf(oldItem);
                 System.out.println(index);
                 if (index >= 0) {
-                    if (newItem.isClaimed()) {
+                    if (newItem.isClaimed() && !newItem.getUser().equals(userId)) {
                         items.remove(oldItem);
                         itemKeys.remove(modelName);
                     } else {
