@@ -42,7 +42,7 @@ public class ItemList extends ListActivity {
         items = new ArrayList<>();
         final String userId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
-        adapter = new ItemArrayAdapter(this, items, null, null);
+        //adapter = new ItemArrayAdapter(this, items, null, null);
 
         final ListView listView = (ListView) findViewById(android.R.id.list);
         listView.setAdapter(adapter);
