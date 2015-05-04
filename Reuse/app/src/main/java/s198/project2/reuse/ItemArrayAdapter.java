@@ -78,10 +78,15 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
                 Map<String, Object> itemMap = (Map<String, Object>) dataSnapshot.getValue();
                 Item newItem = new Item(itemMap);
                 int index = items.indexOf(oldItem);
+                System.out.println(index);
                 if (index >= 0) {
-                    items.set(index, newItem);
-                    itemKeys.put(modelName, newItem);
-
+                    if (newItem.isClaimed()) {
+                        items.remove(oldItem);
+                        itemKeys.remove(modelName);
+                    } else {
+                        items.set(index, newItem);
+                        itemKeys.put(modelName, newItem);
+                    }
                     notifyDataSetChanged();
                 }
             }
