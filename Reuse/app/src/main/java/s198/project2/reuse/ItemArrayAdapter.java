@@ -46,24 +46,26 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Map<String, Object> itemMap = (Map<String, Object>) dataSnapshot.getValue();
                 Item item = new Item(itemMap);
-                if ((item.getCategory().equals(category) || category == null) && (!item.isClaimed() || item.getUser().equals(userId))) {
-                    itemKeys.put(dataSnapshot.getKey(), item);
+                if((userId==null && !item.isClaimed()) || item.getUser().equals(userId)) {
+                    if ((item.getCategory().equals(category) || category == null)) {
+                        itemKeys.put(dataSnapshot.getKey(), item);
 
-                    // Insert into the correct location, based on previousChildName
-                    if (previousChildName == null) {
-                        items.add(0, item);
-                    } else {
-                        Item previousItem = itemKeys.get(previousChildName);
-                        int previousIndex = items.indexOf(previousItem);
-                        int nextIndex = previousIndex + 1;
-                        if (nextIndex == items.size()) {
-                            items.add(item);
+                        // Insert into the correct location, based on previousChildName
+                        if (previousChildName == null) {
+                            items.add(0, item);
                         } else {
-                            items.add(nextIndex, item);
+                            Item previousItem = itemKeys.get(previousChildName);
+                            int previousIndex = items.indexOf(previousItem);
+                            int nextIndex = previousIndex + 1;
+                            if (nextIndex == items.size()) {
+                                items.add(item);
+                            } else {
+                                items.add(nextIndex, item);
+                            }
                         }
-                    }
 
-                    notifyDataSetChanged();
+                        notifyDataSetChanged();
+                    }
                 }
             }
 

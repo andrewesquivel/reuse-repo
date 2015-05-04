@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
 public class ItemList extends ListActivity {
     public List<Item> items;
     public Activity activity;
+    private String category = null;
 
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -28,7 +31,7 @@ public class ItemList extends ListActivity {
         setContentView(R.layout.item_list_view);
         activity = this;
 
-        Spinner dropdown = (Spinner) findViewById(R.id.spinner2);
+        final Spinner dropdown = (Spinner) findViewById(R.id.spinner2);
         String[] categories = new String[]{"All", "Books", "Electronics", "Food", "Furniture", "Tickets & Coupons", "Miscellaneous"};
         ArrayAdapter<String> spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
         dropdown.setAdapter(spinAdapter);
@@ -36,7 +39,7 @@ public class ItemList extends ListActivity {
 
         items = new ArrayList<>();
         final String userId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        ArrayAdapter<Item> adapter = new ItemArrayAdapter(this, items, null, userId);
+        ArrayAdapter<Item> adapter = new ItemArrayAdapter(this, items, null, null);
         final ListView listView = (ListView) findViewById(android.R.id.list);
         listView.setAdapter(adapter);
 
@@ -58,13 +61,13 @@ public class ItemList extends ListActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
-                String category = (String) parentView.getItemAtPosition(position);
+                category = (String) parentView.getItemAtPosition(position);
                 if (!category.equals("All")){
                     items = new ArrayList<Item>();
-                    listView.setAdapter(new ItemArrayAdapter(activity, items, category, userId));
+                    listView.setAdapter(new ItemArrayAdapter(activity, items, category, null));
                 }
                 else {
-                    listView.setAdapter(new ItemArrayAdapter(activity, items, null, userId));
+                    listView.setAdapter(new ItemArrayAdapter(activity, items, null, null));
                 }
             }
 
@@ -72,6 +75,24 @@ public class ItemList extends ListActivity {
             public void onNothingSelected(AdapterView<?> parentView) { }
         });
 
+        final Button button4 = (Button) findViewById(R.id.button4);
+        button4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                items = new ArrayList<Item>();
+                listView.setAdapter(new ItemArrayAdapter(activity, items, null, null));
+                dropdown.setVisibility(View.VISIBLE);
+            }
+        });
+
+        final Button button5 = (Button) findViewById(R.id.button5);
+        button5.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                items = new ArrayList<Item>();
+                listView.setAdapter(new ItemArrayAdapter(activity, items, null, userId));
+                Spinner spin = (Spinner) findViewById(R.id.spinner2);
+                spin.setVisibility(View.GONE);
+            }
+        });
     }
     public void viewItems(View view){
         Intent intent = new Intent(this, MapActivity.class);
@@ -80,7 +101,6 @@ public class ItemList extends ListActivity {
         Log.i("EXTRAS", intent.getExtras().toString());
         startActivity(intent);
     }
-
 
 
 }

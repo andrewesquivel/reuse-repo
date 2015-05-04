@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,6 +57,14 @@ public class ItemActivity extends Activity {
         String userId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         if (userId.equals(item.getUser())){
             Log.i("user", "this is user's own item");
+            EditText claim = (EditText) findViewById(R.id.claimCode);
+            claim.setText(code);
+            if(item.isClaimed()){
+                Button claimButton = (Button) findViewById(R.id.claimButton);
+                claimButton.setVisibility(View.GONE);
+                TextView claimed = (TextView) findViewById(R.id.claimed);
+                claimed.setVisibility(View.VISIBLE);
+            }
         }
 
     }
@@ -113,6 +122,7 @@ public class ItemActivity extends Activity {
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
             ref.child("claimed").setValue(true);
+
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect Claim Code!", Toast.LENGTH_LONG);
             toast.show();
