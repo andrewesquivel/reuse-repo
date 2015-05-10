@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,8 @@ public class ItemActivity extends Activity {
         key = item.getKey();
         Log.i("key", "here " + item.getKey());
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         ImageView ivItem = (ImageView) findViewById(R.id.itemImage);
         UrlImageViewHelper.setUrlDrawable(ivItem, item.getPictureUrl());
 
@@ -56,14 +59,23 @@ public class ItemActivity extends Activity {
 
         String userId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         if (userId.equals(item.getUser())){
+            Button claimButton = (Button) findViewById(R.id.claimButton);
+            TextView claimLabel = (TextView) findViewById(R.id.textView7);
+            Button deleteButton = (Button) findViewById(R.id.deleteButton);
             Log.i("user", "this is user's own item");
             EditText claim = (EditText) findViewById(R.id.claimCode);
-            claim.setText(code);
+            claim.setVisibility(View.GONE);
+            claimButton.setVisibility(View.GONE);
+            deleteButton.setVisibility(View.VISIBLE);
+            claimLabel.setText("Claim Code: " + code);
+            claimLabel.setVisibility(View.VISIBLE);
             if(item.isClaimed()){
-                Button claimButton = (Button) findViewById(R.id.claimButton);
                 claimButton.setVisibility(View.GONE);
+                deleteButton.setVisibility(View.GONE);
                 TextView claimed = (TextView) findViewById(R.id.claimed);
                 claimed.setVisibility(View.VISIBLE);
+                claim.setVisibility(View.GONE);
+                claimLabel.setVisibility(View.GONE);
             }
         }
 
@@ -82,14 +94,15 @@ public class ItemActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+                switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+            case R.id.action_settings:
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
+
     }
 
     public void viewItem(View view) {
@@ -128,4 +141,5 @@ public class ItemActivity extends Activity {
             toast.show();
         }
     }
+
 }
