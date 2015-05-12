@@ -147,6 +147,7 @@ public class PostActivity extends Activity implements
                         w *= ratio;
                     }
                     Bitmap resized = Bitmap.createScaledBitmap(bitmap, w, h, true);
+                    resized = imageOrientationValidator(resized, fileUri.getPath());
                     imageView.setImageBitmap(resized);
                 } catch (IOException e){ };
 
