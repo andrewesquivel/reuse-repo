@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -39,6 +40,7 @@ public class MapActivity extends FragmentActivity {
             mItems = (List<Item>) extras.getSerializable("items");
         }
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         setUpMapIfNeeded();
     }
@@ -147,5 +149,14 @@ public class MapActivity extends FragmentActivity {
         Log.i("MARKER", "added");
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
 

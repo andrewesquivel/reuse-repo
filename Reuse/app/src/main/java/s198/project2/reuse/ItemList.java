@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,6 +31,8 @@ public class ItemList extends ListActivity {
 
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         setContentView(R.layout.item_list_view);
         activity = this;
@@ -114,7 +118,16 @@ public class ItemList extends ListActivity {
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
         }
-    }
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                  finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

@@ -63,6 +63,8 @@ public class PostActivity extends Activity implements
         setContentView(R.layout.activity_post);
         firebase = new Firebase(FIREBASE_URL).child("items");
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         ((Button) findViewById(R.id.button2)).setEnabled(true);
         Map config = new HashMap();
         config.put("cloud_name", "dqm3svvyq");
@@ -93,9 +95,12 @@ public class PostActivity extends Activity implements
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+            case R.id.action_settings:
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
