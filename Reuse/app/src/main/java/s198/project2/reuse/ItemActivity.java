@@ -20,12 +20,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 
 public class ItemActivity extends Activity {
@@ -33,7 +37,6 @@ public class ItemActivity extends Activity {
 
     private String code;
     private String key = "";
-    public static final String FIREBASE_URL = "https://reuse-app.firebaseio.com";
     private Firebase firebase;
 
     @Override
@@ -55,30 +58,36 @@ public class ItemActivity extends Activity {
         ImageView ivItem = (ImageView) findViewById(R.id.itemImage);
         UrlImageViewHelper.setUrlDrawable(ivItem, item.getPictureUrl());
 
-        firebase = new Firebase(FIREBASE_URL).child("items");
+        firebase = new Firebase(ReuseApplication.FIREBASE_URL).child("items");
+        // add a firebase listener to update after having edited
 
         String userId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         if (userId.equals(item.getUser())){
             Button claimButton = (Button) findViewById(R.id.claimButton);
             TextView claimLabel = (TextView) findViewById(R.id.textView7);
             Button deleteButton = (Button) findViewById(R.id.deleteButton);
+            Button editButton = (Button) findViewById(R.id.editButton);
+
             Log.i("user", "this is user's own item");
             EditText claim = (EditText) findViewById(R.id.claimCode);
             claim.setVisibility(View.GONE);
             claimButton.setVisibility(View.GONE);
             deleteButton.setVisibility(View.VISIBLE);
+            editButton.setVisibility(View.VISIBLE);
             claimLabel.setText("Claim Code: " + code);
             claimLabel.setVisibility(View.VISIBLE);
+            claimLabel.setVisibility(View.VISIBLE);
+
             if(item.isClaimed()){
                 claimButton.setVisibility(View.GONE);
                 deleteButton.setVisibility(View.GONE);
+                editButton.setVisibility(View.GONE);
                 TextView claimed = (TextView) findViewById(R.id.claimed);
                 claimed.setVisibility(View.VISIBLE);
                 claim.setVisibility(View.GONE);
                 claimLabel.setVisibility(View.GONE);
             }
         }
-
     }
 
 
@@ -117,7 +126,7 @@ public class ItemActivity extends Activity {
         EditText claimCode = (EditText) findViewById(R.id.claimCode);
         String codeInput = claimCode.getText().toString();
         if (codeInput.equals(code)) {
-            Firebase ref = new Firebase(FIREBASE_URL + "/items/" + key);
+            Firebase ref = new Firebase(ReuseApplication.FIREBASE_URL + "/items/" + key);
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     this);
 
@@ -140,6 +149,12 @@ public class ItemActivity extends Activity {
             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect Claim Code!", Toast.LENGTH_LONG);
             toast.show();
         }
+    }
+
+    public void edit(View view) {
+        Intent i = new Intent(this, EditActivity.class);
+        i.putExtra("item", item);
+        startActivity(i);
     }
 
 }

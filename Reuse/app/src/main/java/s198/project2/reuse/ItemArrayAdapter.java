@@ -151,7 +151,11 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         TextView tvDescription = (TextView) convertView.findViewById(R.id.description);
         ImageView ivIcon = (ImageView) convertView.findViewById(R.id.icon);
 
-        tvName.setText(item.getName());
+        if (!item.isClaimed()) {
+            tvName.setText(item.getName());
+        } else {
+            tvName.setText("[CLAIMED] " + item.getName());
+        }
         tvDescription.setText(item.getDescription());
         UrlImageViewHelper.setUrlDrawable(ivIcon, item.getPictureUrl());
 

@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="You have successfully posted your item! The claim code is:"
+        android:text="@string/instructions"
         android:id="@+id/textView5"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -21,10 +21,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
+        android:text="lalala"
         android:id="@+id/textView6"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:textSize="50dp"
+        android:layout_below="@+id/textView5"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="82dp" />
 
     <Button
         android:layout_width="150dp"
@@ -35,9 +37,17 @@
         android:textStyle="bold"
         android:textColor="@color/white"
         android:background="@color/green"
-        android:layout_marginBottom="178dp"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="70dp"
+        android:layout_below="@+id/textView6"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView3"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
+        android:src="@drawable/reusefooter"
+        android:layout_alignTop="@+id/button1"
+        android:layout_marginTop="100dp" />
 
 </RelativeLayout>

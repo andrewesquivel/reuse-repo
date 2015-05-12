@@ -72,8 +72,16 @@ public class Item implements Parcelable {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<Double> getLocation() {
@@ -84,8 +92,20 @@ public class Item implements Parcelable {
 //        return locationTemp;
     }
 
+    public String getLocationInput() {
+        return locationInput;
+    }
+
+    public void setLocationInput(String locationInput) {
+        this.locationInput = locationInput;
+    }
+
     public String getPictureUrl() {
         return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
     public String getCode() {
@@ -98,6 +118,10 @@ public class Item implements Parcelable {
 
     public String getCategory() {
         return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public boolean isClaimed() {

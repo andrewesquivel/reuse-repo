@@ -14,7 +14,7 @@
         <Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Add Picture"
+            android:text="Change Picture"
             android:id="@+id/button"
             android:onClick="takePicture"
             android:layout_marginTop="5dp"
@@ -23,7 +23,8 @@
             android:background="@color/green"
             android:layout_alignParentTop="@+id/imageView"
             android:layout_below="@+id/imageView"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:visibility="gone" />
 
         <EditText
             android:layout_width="fill_parent"
@@ -62,9 +63,9 @@
         <Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Post Item"
-            android:id="@+id/button2"
-            android:onClick="postItem"
+            android:text="Edit"
+            android:id="@+id/editButton"
+            android:onClick="finishEdit"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@color/green"

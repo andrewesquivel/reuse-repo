@@ -11,4 +11,6 @@
     <string name="title_activity_post_success">PostSuccess</string>
     <string name="title_activity_item">ItemActivity</string>
     <string name="action_map">View On Map</string>
+    <string name="instructions">You have successfully posted your item! Make sure to write down the following claim code and leave it with the item so someone else can claim it:</string>
+    <string name="title_activity_edit">EditActivity</string>
 </resources>

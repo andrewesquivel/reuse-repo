@@ -98,14 +98,15 @@
         android:layout_height="wrap_content"
         android:text="Delete"
         android:id="@+id/deleteButton"
-        android:layout_marginTop="20dp"
         android:textStyle="bold"
         android:textColor="@color/white"
         android:background="@color/green"
-        android:layout_below="@+id/textView7"
-        android:layout_centerHorizontal="true"
         android:onClick="claim"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_alignTop="@+id/claimButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/claimed"
@@ -118,5 +119,19 @@
         android:layout_below="@+id/view_button"
         android:layout_centerHorizontal="true"
         android:visibility="gone"/>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id="@+id/editButton"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@color/green"
+        android:onClick="edit"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
