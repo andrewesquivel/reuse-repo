@@ -124,7 +124,7 @@ public class MapActivity extends FragmentActivity {
                 .tilt(30)                   // Sets the tilt of the camera to 30 degrees
                 .build();                   // Creates a CameraPosition from the builder
         Log.i("POSITION", cameraPosition.toString());
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bound, 500, 500, 20));
     }
 
     private void setUpSingleViewMap(){
