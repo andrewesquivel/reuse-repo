@@ -53,6 +53,9 @@ public class ItemActivity extends Activity {
         key = item.getKey();
         Log.i("key", "here " + item.getKey());
 
+        TextView tvLocation = (TextView) findViewById(R.id.textView);
+        tvLocation.setText(item.getLocationInput());
+
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         ImageView ivItem = (ImageView) findViewById(R.id.itemImage);
