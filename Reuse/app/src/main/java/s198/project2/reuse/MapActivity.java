@@ -1,10 +1,13 @@
 package s198.project2.reuse;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,19 +15,23 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //import android
 
 
-public class MapActivity extends FragmentActivity {
+public class MapActivity extends FragmentActivity{
 
     private GoogleMap mMap;
     private String type;
     private Item mItem;
     private List<Item> mItems;
+    private Map<Marker, Item> markerMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +81,9 @@ public class MapActivity extends FragmentActivity {
             // Try to obtain the map from the SupportMapFragment.
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
+//            mMap.setOnMarkerClickListener((GoogleMap.OnMarkerClickListener) new MapInfoWindow());
             // Check if we were successful in obtaining the map.
+            mMap.setInfoWindowAdapter(new MapInfoWindow());
             if (mMap != null) {
                 setUpMap();
             }
@@ -115,8 +124,8 @@ public class MapActivity extends FragmentActivity {
             } else{
                 bound = bound.including(coordinates);
             }
-            mMap.addMarker(new MarkerOptions().position(coordinates).title(i.getName()));
-            Log.i("MARKER", "added");
+            Marker m = mMap.addMarker(new MarkerOptions().position(coordinates).title(i.getName()));
+            markerMap.put(m,i);
         }
 //        Log.i("BOUNDS", bound.toString());
         CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -136,7 +145,8 @@ public class MapActivity extends FragmentActivity {
         LatLng coordinates = new LatLng(location.get(0), location.get(1));
         Log.i("COORDINATES", coordinates.toString());
 
-        mMap.addMarker(new MarkerOptions().position(coordinates).title(mItem.getName()));
+        Marker m = mMap.addMarker(new MarkerOptions().position(coordinates).title(mItem.getName()));
+        markerMap.put(m,mItem);
         // Construct a CameraPosition focusing on Mountain View and animate the camera to that position.
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(coordinates)      // Sets the center of the map to Mountain View
@@ -157,6 +167,48 @@ public class MapActivity extends FragmentActivity {
                 finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public class MapInfoWindow  implements GoogleMap.InfoWindowAdapter {
+        @Override
+        public View getInfoWindow(final Marker marker) {
+            Log.i("INFO WINDOW" , "window");
+            Button title = new Button(getBaseContext());
+            title.setBackgroundColor(getResources().getColor(R.color.green));
+            title.setTextColor(getResources().getColor(R.color.white));
+            title.setText(marker.getTitle());
+            title.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("TAG CLICKED" , v.toString());
+                    Intent i = new Intent(getBaseContext(), ItemActivity.class);
+                    i.putExtra("item", markerMap.get(marker));
+                    startActivity(i);
+                }
+            });
+            return title;
+        }
+
+        @Override
+        public View getInfoContents(final Marker marker) {
+            Log.i("INFO WINDOW" , "contents");
+            Button title = new Button(getBaseContext());
+            title.setBackgroundColor(getResources().getColor(R.color.green));
+            title.setTextColor(getResources().getColor(R.color.white));
+            title.setText(marker.getTitle());
+
+            title.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("TAG CLICKED" , v.toString());
+                    Intent i = new Intent(getBaseContext(), ItemActivity.class);
+                    i.putExtra("item", markerMap.get(marker));
+                    startActivity(i);
+                }
+            });
+            return title;
+        }
     }
 }
 

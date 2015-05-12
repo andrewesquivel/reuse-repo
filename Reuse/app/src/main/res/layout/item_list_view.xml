@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
-        android:src="@drawable/ic_action_map"
+        android:src="@drawable/ic_action"
         fab:fab_colorNormal="@color/green"
         fab:fab_colorPressed="@color/cream"
         fab:fab_colorRipple="@color/white"
