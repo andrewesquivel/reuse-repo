@@ -2,9 +2,11 @@ package s198.project2.reuse;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
@@ -39,6 +41,7 @@ public class ItemList extends ListActivity {
 
         final Spinner dropdown = (Spinner) findViewById(R.id.spinner2);
         String[] categories = new String[]{"All", "Books", "Electronics", "Food", "Furniture", "Tickets & Coupons", "Miscellaneous"};
+
         ArrayAdapter<String> spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
         dropdown.setAdapter(spinAdapter);
 
@@ -102,6 +105,7 @@ public class ItemList extends ListActivity {
                 spin.setVisibility(View.GONE);
             }
         });
+        
     }
     public void viewItems(View view){
         if(items.size() > 0) {
