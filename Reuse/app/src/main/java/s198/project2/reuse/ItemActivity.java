@@ -27,21 +27,27 @@ public class ItemActivity extends Activity {
     private String key = "";
     private Firebase firebase;
 
+    private TextView tvName;
+    private TextView tvDescription;
+    private TextView tvLocation;
+
+    private final int EDIT_ACTIVITY_CODE = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_details);
         Bundle data = getIntent().getExtras();
         item = (Item) data.getParcelable("item");
-        TextView tvName = (TextView) findViewById(R.id.name);
+        tvName = (TextView) findViewById(R.id.name);
         tvName.setText(item.getName());
-        TextView tvDescription = (TextView) findViewById(R.id.description);
+        tvDescription = (TextView) findViewById(R.id.description);
         tvDescription.setText(item.getDescription());
         code = item.getCode();
         key = item.getKey();
         Log.i("key", "here " + item.getKey());
 
-        TextView tvLocation = (TextView) findViewById(R.id.textView);
+        tvLocation = (TextView) findViewById(R.id.textView);
         tvLocation.setText(item.getLocationInput());
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -140,10 +146,21 @@ public class ItemActivity extends Activity {
         }
     }
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EDIT_ACTIVITY_CODE) {
+            if (resultCode == RESULT_OK) {
+                item = data.getParcelableExtra("item");
+                tvName.setText(item.getName());
+                tvDescription.setText(item.getDescription());
+                tvLocation.setText(item.getLocationInput());
+            }
+        }
+    }
+
     public void edit(View view) {
         Intent i = new Intent(this, EditActivity.class);
         i.putExtra("item", item);
-        startActivity(i);
+        startActivityForResult(i, EDIT_ACTIVITY_CODE);
     }
 
 }

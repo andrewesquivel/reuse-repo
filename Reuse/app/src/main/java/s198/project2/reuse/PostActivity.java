@@ -48,12 +48,10 @@ public class PostActivity extends Activity implements
     private int pic = 1;
     private Uri fileUri;
 
-    public static final String FIREBASE_URL = "https://reuse-app.firebaseio.com";
     private Firebase firebase;
 
     private final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-    private final String FILEPICKER_API_KEY = "AKzhkK4dxSBSbK9eNfY3vz";
     private Cloudinary cloudinary;
 
     private GoogleApiClient mGoogleApiClient;
@@ -65,7 +63,7 @@ public class PostActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        firebase = new Firebase(FIREBASE_URL).child("items");
+        firebase = new Firebase(ReuseApplication.FIREBASE_URL).child("items");
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -225,7 +223,6 @@ public class PostActivity extends Activity implements
             EditText etLocation = (EditText) findViewById(R.id.locationInput);
             String locationInput = etLocation.getText().toString();
 
-            // get filepicker url
             String pictureUrl = "";
 
             // generate random code

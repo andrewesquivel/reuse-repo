@@ -27,7 +27,6 @@ import java.util.Map;
 public class ItemArrayAdapter extends ArrayAdapter<Item> {
     private Activity context;
     private List<Item> items;
-    public static final String FIREBASE_URL = "https://reuse-app.firebaseio.com";
     private Firebase firebase;
     private int layout;
     private LayoutInflater mInflater;
@@ -36,7 +35,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
 
     public ItemArrayAdapter(Activity context, final List<Item> items, final String category, final String userId) {
         super(context, R.layout.item_row_layout, items);
-        firebase = new Firebase(FIREBASE_URL).child("items");
+        firebase = new Firebase(ReuseApplication.FIREBASE_URL).child("items");
 
         this.items = new ArrayList<>();
         this.itemKeys = new HashMap<>();
@@ -46,6 +45,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Map<String, Object> itemMap = (Map<String, Object>) dataSnapshot.getValue();
                 Item item = new Item(itemMap);
+
                 if((userId==null && !item.isClaimed()) || item.getUser().equals(userId)) {
                     if ((item.getCategory().equals(category) || category == null)) {
                         itemKeys.put(dataSnapshot.getKey(), item);
@@ -78,7 +78,6 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
                 Map<String, Object> itemMap = (Map<String, Object>) dataSnapshot.getValue();
                 Item newItem = new Item(itemMap);
                 int index = items.indexOf(oldItem);
-                System.out.println(index);
                 if (index >= 0) {
                     if (newItem.isClaimed() && !newItem.getUser().equals(userId)) {
                         items.remove(oldItem);
