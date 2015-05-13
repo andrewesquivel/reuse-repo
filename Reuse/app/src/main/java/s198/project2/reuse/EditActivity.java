@@ -1,6 +1,7 @@
 package s198.project2.reuse;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,7 +59,7 @@ public class EditActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_edit, menu);
+        getMenuInflater().inflate(R.menu.menu_item, menu);
         return true;
     }
 
@@ -90,4 +91,13 @@ public class EditActivity extends Activity {
 
         finish();
     }
+
+    @Override
+    public void finish() {
+        Intent data = new Intent();
+        data.putExtra("item", item);
+        setResult(RESULT_OK, data);
+        super.finish();
+    }
+
 }
