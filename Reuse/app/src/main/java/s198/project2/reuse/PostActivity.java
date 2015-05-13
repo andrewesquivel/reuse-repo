@@ -1,6 +1,7 @@
 package s198.project2.reuse;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -10,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
@@ -80,6 +82,7 @@ public class PostActivity extends Activity implements
         dropdown.setAdapter(adapter);
         buildGoogleApiClient();
         mGoogleApiClient.connect();
+
     }
 
 
@@ -290,8 +293,6 @@ public class PostActivity extends Activity implements
             item.setKey(ref.getKey());
             ref.setValue(item);
 
-            Log.i("post item ", ref.getKey());
-            System.out.println(code);
             Intent intent = new Intent(getApplicationContext(), PostSuccessActivity.class);
             intent.putExtra("code", code);
 
