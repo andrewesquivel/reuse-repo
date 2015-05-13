@@ -24,7 +24,7 @@
                 android:id="@+id/button4"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:background="@color/green"
+                android:background="@color/lightGreen"
                 />
 
             <Button

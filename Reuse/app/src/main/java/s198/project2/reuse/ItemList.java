@@ -88,21 +88,25 @@ public class ItemList extends ListActivity {
         });
 
         final Button button4 = (Button) findViewById(R.id.button4);
+        final Button button5 = (Button) findViewById(R.id.button5);
         button4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 items = new ArrayList<Item>();
                 listView.setAdapter(new ItemArrayAdapter(activity, items, null, null));
                 dropdown.setVisibility(View.VISIBLE);
+                button4.setBackgroundColor(getResources().getColor(R.color.lightGreen));
+                button5.setBackgroundColor(getResources().getColor(R.color.green));
             }
         });
 
-        final Button button5 = (Button) findViewById(R.id.button5);
         button5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 items = new ArrayList<Item>();
                 listView.setAdapter(new ItemArrayAdapter(activity, items, null, userId));
                 Spinner spin = (Spinner) findViewById(R.id.spinner2);
                 spin.setVisibility(View.GONE);
+                button5.setBackgroundColor(getResources().getColor(R.color.lightGreen));
+                button4.setBackgroundColor(getResources().getColor(R.color.green));
             }
         });
         
