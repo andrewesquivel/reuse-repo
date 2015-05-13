@@ -25,7 +25,7 @@ import java.util.Map;
 //import android
 
 
-public class MapActivity extends FragmentActivity{
+public class MapActivity extends FragmentActivity implements GoogleMap.OnInfoWindowClickListener{
 
     private GoogleMap mMap;
     private String type;
@@ -81,8 +81,8 @@ public class MapActivity extends FragmentActivity{
             // Try to obtain the map from the SupportMapFragment.
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
-//            mMap.setOnMarkerClickListener((GoogleMap.OnMarkerClickListener) new MapInfoWindow());
             // Check if we were successful in obtaining the map.
+            mMap.setOnInfoWindowClickListener(this);
             mMap.setInfoWindowAdapter(new MapInfoWindow());
             if (mMap != null) {
                 setUpMap();
@@ -169,6 +169,14 @@ public class MapActivity extends FragmentActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Log.i("TAG CLICKED" , marker.toString());
+        Intent i = new Intent(getBaseContext(), ItemActivity.class);
+        i.putExtra("item", markerMap.get(marker));
+        startActivity(i);
+    }
+
 
     public class MapInfoWindow  implements GoogleMap.InfoWindowAdapter {
         @Override
@@ -178,15 +186,6 @@ public class MapActivity extends FragmentActivity{
             title.setBackgroundColor(getResources().getColor(R.color.green));
             title.setTextColor(getResources().getColor(R.color.white));
             title.setText(marker.getTitle());
-            title.setOnClickListener(new Button.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.i("TAG CLICKED" , v.toString());
-                    Intent i = new Intent(getBaseContext(), ItemActivity.class);
-                    i.putExtra("item", markerMap.get(marker));
-                    startActivity(i);
-                }
-            });
             return title;
         }
 
@@ -197,16 +196,6 @@ public class MapActivity extends FragmentActivity{
             title.setBackgroundColor(getResources().getColor(R.color.green));
             title.setTextColor(getResources().getColor(R.color.white));
             title.setText(marker.getTitle());
-
-            title.setOnClickListener(new Button.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.i("TAG CLICKED" , v.toString());
-                    Intent i = new Intent(getBaseContext(), ItemActivity.class);
-                    i.putExtra("item", markerMap.get(marker));
-                    startActivity(i);
-                }
-            });
             return title;
         }
     }
